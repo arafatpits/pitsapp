@@ -10,8 +10,18 @@ const cardItemsList = [
 ]
 
 function Card({ title, icon, route }) {
+  const handlePress = () => {
+    try {
+      if (route && typeof route === "string") {
+        router.push(route)
+      }
+    } catch (error) {
+      console.error("Navigation error:", error)
+    }
+  }
+
   return (
-    <TouchableOpacity onPress={() => router.push(route)} style={styles.card} activeOpacity={0.7}>
+    <TouchableOpacity onPress={handlePress} style={styles.card} activeOpacity={0.7}>
       <View style={styles.iconContainer}>
         <Image source={icon} style={styles.cardIconBase} tintColor="white" resizeMode="contain" />
       </View>
@@ -44,7 +54,15 @@ export default function HomeScreen() {
 
       <View style={styles.footer}>
         <Text style={styles.footerQuestion}>Questions or ready to start a recovery?</Text>
-        <TouchableOpacity onPress={() => router.push("contact")}>
+        <TouchableOpacity
+          onPress={() => {
+            try {
+              router.push("contact")
+            } catch (error) {
+              console.error("Navigation error:", error)
+            }
+          }}
+        >
           <Text style={styles.footerLink}>Contact Our Experts</Text>
         </TouchableOpacity>
       </View>

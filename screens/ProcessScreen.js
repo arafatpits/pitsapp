@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  useWindowDimensions,
+} from "react-native";
+import { useMemo } from "react";
 
 const processSteps = [
   {
@@ -25,12 +33,24 @@ const processSteps = [
     description:
       "Upon successful data recovery, your files are transferred to a new encrypted drive. The drive is then securely shipped back to you, preserving data integrity and ensuring you retain full control and peace of mind throughout the process.",
   },
-]
+];
 
 export default function ProcessScreen() {
+  const { width } = useWindowDimensions();
+
+  const itemWidth = useMemo(() => {
+    if (width >= 1280) return "23%";
+    if (width >= 768) return "48%";
+    return "100%";
+  }, [width]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.content}>
           <Text style={styles.title}>Our Data Recovery Process</Text>
           <Text style={styles.description}>
@@ -40,7 +60,7 @@ export default function ProcessScreen() {
 
           <View style={styles.stepsContainer}>
             {processSteps.map((step, index) => (
-              <View key={index} style={styles.stepCard}>
+              <View key={index} style={[styles.stepCard, { width: itemWidth }]}>
                 <View style={styles.stepNumber}>
                   <Text style={styles.stepNumberText}>{step.number}</Text>
                 </View>
@@ -54,7 +74,7 @@ export default function ProcessScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -82,16 +102,23 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   stepsContainer: {
-    gap: 24,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 24,
+    columnGap: 16,
   },
   stepCard: {
     backgroundColor: "white",
     borderRadius: 12,
     padding: 24,
-    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
-    elevation: 4,
     flexDirection: "row",
     alignItems: "flex-start",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
   stepNumber: {
     backgroundColor: "#d93927",
@@ -122,4 +149,4 @@ const styles = StyleSheet.create({
     color: "#54595F",
     lineHeight: 20,
   },
-})
+});

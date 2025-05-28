@@ -1,33 +1,43 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { View, Text, StyleSheet, ScrollView, Image, SafeAreaView } from "react-native"
-
-// Import the local JSON file
-import locationsData from "../data/locations.json"
+import { useState, useEffect, useMemo } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  SafeAreaView,
+  useWindowDimensions,
+} from "react-native";
+import locationsData from "../data/locations.json";
 
 export default function LocationsScreen() {
-  const [locations, setLocations] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { width } = useWindowDimensions();
+
+  const cardWidth = useMemo(() => {
+    if (width >= 1280) return "31%";
+    if (width >= 768) return "48%";
+    return "100%";
+  }, [width]);
 
   useEffect(() => {
     const loadLocations = async () => {
       try {
-        // Simulate a small delay to show loading state
         setTimeout(() => {
-          setLocations(locationsData)
-          setLoading(false)
-        }, 500)
+          setLocations(locationsData);
+          setLoading(false);
+        }, 500);
       } catch (err) {
-        console.error("Failed to load locations:", err)
-        setError(err.message)
-        setLoading(false)
+        console.error("Failed to load locations:", err);
+        setError(err.message);
+        setLoading(false);
       }
-    }
+    };
 
-    loadLocations()
-  }, [])
+    loadLocations();
+  }, []);
 
   if (loading) {
     return (
@@ -36,7 +46,7 @@ export default function LocationsScreen() {
           <Text style={styles.loadingText}>Loading locations...</Text>
         </View>
       </SafeAreaView>
-    )
+    );
   }
 
   if (error) {
@@ -46,12 +56,12 @@ export default function LocationsScreen() {
           <Text style={styles.errorText}>Error: {error}</Text>
         </View>
       </SafeAreaView>
-    )
+    );
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         <View style={styles.content}>
           <Text style={styles.title}>Our Locations</Text>
           <Text style={styles.description}>
@@ -62,7 +72,7 @@ export default function LocationsScreen() {
           {locations.length > 0 && (
             <View style={styles.locationsContainer}>
               {locations.map((location, index) => (
-                <View key={index} style={styles.locationCard}>
+                <View key={index} style={[styles.locationCard, { width: cardWidth }]}>
                   <View style={styles.locationHeader}>
                     <View style={styles.iconContainer}>
                       <Image
@@ -87,7 +97,7 @@ export default function LocationsScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -120,13 +130,20 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   locationsContainer: {
-    gap: 24,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 24,
+    columnGap: 16,
   },
   locationCard: {
     backgroundColor: "white",
     borderRadius: 12,
     padding: 24,
-    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
     elevation: 4,
   },
   locationHeader: {
@@ -178,4 +195,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 24,
   },
-})
+});

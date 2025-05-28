@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Linking, SafeAreaView } from "react-native"
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Linking, SafeAreaView } from "react-native";
 
 export default function ContactScreen() {
-  const phoneNumber = "(888) 611-0737"
-  const emailAddress = "info@pitsdatarecovery.com"
-  const websiteUrl = "https://www.pitsdatarecovery.com/"
-  const requestHelpUrl = "https://www.pitsdatarecovery.com/request-help/"
+  const phoneNumber = "(888) 611-0737";
+  const emailAddress = "info@pitsdatarecovery.com";
+  const websiteUrl = "https://www.pitsdatarecovery.com/";
+  const requestHelpUrl = "https://www.pitsdatarecovery.com/request-help/";
 
   const contactItems = [
     {
@@ -12,27 +12,24 @@ export default function ContactScreen() {
       label: "Call Us",
       value: phoneNumber,
       onPress: () => Linking.openURL(`tel:+18886110737`),
-      ariaLabel: `Call PITS Global Data Recovery at ${phoneNumber}`,
     },
     {
       iconSrc: require("../assets/icons/mail.png"),
       label: "Email Us",
       value: emailAddress,
       onPress: () => Linking.openURL(`mailto:${emailAddress}`),
-      ariaLabel: `Email PITS Global Data Recovery at ${emailAddress}`,
     },
     {
       iconSrc: require("../assets/icons/web.png"),
       label: "Visit Our Website",
       value: "www.pitsdatarecovery.com",
       onPress: () => Linking.openURL(websiteUrl),
-      ariaLabel: "Visit the PITS Global Data Recovery website",
     },
-  ]
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         <View style={styles.content}>
           <Text style={styles.title}>Contact Us</Text>
           <Text style={styles.description}>
@@ -55,11 +52,7 @@ export default function ContactScreen() {
           </View>
 
           <View style={styles.ctaContainer}>
-            <TouchableOpacity
-              style={styles.ctaButton}
-              onPress={() => Linking.openURL(requestHelpUrl)}
-              activeOpacity={0.8}
-            >
+            <TouchableOpacity style={styles.ctaButton} onPress={() => Linking.openURL(requestHelpUrl)} activeOpacity={0.8}>
               <Text style={styles.ctaButtonText}>Start Your Data Recovery</Text>
             </TouchableOpacity>
             <Text style={styles.ctaDescription}>
@@ -70,7 +63,7 @@ export default function ContactScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -101,7 +94,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 12,
     padding: 32,
-    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
     elevation: 4,
     marginBottom: 40,
   },
@@ -161,4 +157,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     maxWidth: 320,
   },
-})
+});

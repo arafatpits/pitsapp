@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  useWindowDimensions,
+} from "react-native";
+import { useMemo } from "react";
 
 const services = [
   "Hard Drive Recovery",
@@ -22,12 +30,24 @@ const services = [
   "Synology Data Recovery",
   "Monolith Data Recovery",
   "SD Card Data Recovery",
-]
+];
 
 export default function ServicesScreen() {
+  const { width } = useWindowDimensions();
+
+  const itemWidth = useMemo(() => {
+    if (width >= 1024) return "31%";
+    if (width >= 640) return "48%";
+    return "100%";
+  }, [width]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.content}>
           <Text style={styles.title}>Services We Offer</Text>
           <Text style={styles.description}>
@@ -37,7 +57,7 @@ export default function ServicesScreen() {
 
           <View style={styles.servicesGrid}>
             {services.map((service, index) => (
-              <View key={index} style={styles.serviceItem}>
+              <View key={index} style={[styles.serviceItem, { width: itemWidth }]}>
                 <Text style={styles.serviceText}>{service}</Text>
               </View>
             ))}
@@ -45,7 +65,7 @@ export default function ServicesScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -73,13 +93,20 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   servicesGrid: {
-    gap: 16,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 12,
+    columnGap: 12,
   },
   serviceItem: {
     backgroundColor: "white",
     padding: 16,
     borderRadius: 12,
-    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.05)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
     elevation: 2,
   },
   serviceText: {
@@ -87,4 +114,4 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#333333",
   },
-})
+});
