@@ -9,22 +9,22 @@
       "distribution": "internal"
     },
     "preview": {
-      "ios": {
-        "simulator": true,
-        "buildType": "development-client"
-      },
+      "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
       }
     },
     "production": {
-      "ios": {
-        "buildType": "app-store"
-      },
+      "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
       },
-      "autoIncrement": true
+      "ios": {
+        "buildType": "app-store"
+      }
     }
   },
   "submit": {
