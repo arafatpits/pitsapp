@@ -11,19 +11,34 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pitsdatarecovery.app"
+      "bundleIdentifier": "com.pitsdatarecovery.app",
+      "displayName": "PITS Global Data Recovery",
+      "buildNumber": "1",
+      "icon": "./assets/images/icon.png",
+      "splash": {
+        "image": "./assets/images/splash-icon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
+      },
+      "infoPlist": {
+        "CFBundleDisplayName": "PITS Global Data Recovery",
+        "CFBundleName": "PITS Global Data Recovery",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pitsdatarecovery.app"
+      "package": "com.pitsdatarecovery.app",
+      "versionCode": 1,
+      "icon": "./assets/images/icon.png"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -32,6 +47,7 @@
       "eas": {
         "projectId": "10d47647-286c-4221-8d08-8ccd3cbe95d8"
       }
-    }
+    },
+    "plugins": ["@react-native-community/netinfo"]
   }
 }
